@@ -55,11 +55,11 @@ test("testing step", function(){
 	equal(1, 1, "Practice step"); //had to check visually
 });
 
-
-
-
-
-
-
-
+test("testing randomizeBoard", function(){
+	var board = BoardModel(6); 
+	var randomBoard = board.randomizeBoard();
+	equal(randomBoard.length, 6, "Check that board rows is correct");
+	equal(randomBoard[0].length, 6, "Check that board columns is correct")
+	equal(1, 1, "Practice step"); //check visually.
+});
 

@@ -28,7 +28,6 @@ var GraphView = function(size){
 		* @return {} Returns true on success
 		*/
 		render: function(set){
-			console.log("Rendering", board);
 			//remove the previous board
 			pad.clear();
 

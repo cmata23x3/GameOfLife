@@ -20,7 +20,13 @@ var BoardModel = function(size){
 	}
 
 	return {
-
+		/**
+		* This method uses the current set data structure and 
+		* returns the data structure that would appear after one time step.
+		*
+		* @method step
+		* @return {Array} Returns Array of arrays 
+		*/
 		step: function(){ 
 			var currentSet = set;
 			//Figure out the next step
@@ -36,12 +42,40 @@ var BoardModel = function(size){
 			return nextSet;
 		},
 
+		/**
+		* getSet is a getter that returns the current set data structure.
+		*
+		* @method getSet
+		* @return {Array} Returns Array of arrays 
+		*/
 		getSet: function(){
 			return set; //could this have issues?
 		},
 
+		/**
+		* This method setBoard is a setter for the data structure. 
+		*
+		* @method setBoard
+		* @param {Array} update Array of arrays that the model's set
+		* should be set to. 
+		*/
 		setBoard: function(update){
 			set = update;
+		},
+
+		randomizeBoard: function(){
+			var length = size;
+			//Figure out the next step
+			var set = [];
+			for(var i=0; i<length; i+=1){
+				var row = [];
+				for (var j=0; j<length; j+=1) {
+					row.push( Math.random() <0.25 ? 1 : 0);
+				}
+				set.push(row);
+			}
+			console.log("random set: ", set);
+			return set;			 
 		}
 	}
 }

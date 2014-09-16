@@ -3,16 +3,11 @@
 *
 */
 (function () {
-	var BOARD_SIZE = 6;
+	var BOARD_SIZE = 20;
 	console.log("Running the main method");
 	//Create an instance of the model
 	board = BoardModel(BOARD_SIZE);
-	board.setBoard([[0,1,0,0,1,0],
-					[1,0,0,1,0,1],
-					[0,0,0,0,0,0],
-					[0,1,1,1,0,0],
-					[0,1,0,1,0,0],
-					[0,1,1,1,0,0]]);
+	board.setBoard(board.randomizeBoard());
 
 	//Create a instance of the Graph
 	var graph = GraphView(BOARD_SIZE);
