@@ -3,21 +3,27 @@
 *
 */
 (function () {
-	var BOARD_SIZE = 30;
+	var BOARD_SIZE = 6;
 	console.log("Running the main method");
 	//Create an instance of the model
 	board = BoardModel(BOARD_SIZE);
+	board.setBoard([[0,1,0,0,1,0],
+					[1,0,0,1,0,1],
+					[0,0,0,0,0,0],
+					[0,1,1,1,0,0],
+					[0,1,0,1,0,0],
+					[0,1,1,1,0,0]]);
 
 	//Create a instance of the Graph
 	var graph = GraphView(BOARD_SIZE);
 
-	graph.render();
+	//Set Initial design
+	graph.render(board.getSet());
 
-	//set Interval
+	// set Interval
 	setInterval(function(){
-		// console.log("interval");
-		board.step();
-		// graph.render(board.getSet());
+		board.setBoard(board.step());
+		graph.render(board.getSet());
 	},300);
 
 	}) ()

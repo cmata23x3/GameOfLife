@@ -34,3 +34,32 @@ test("testing _checkStatus", function(){
 	equal(_checkStatus(set, 2, 4), 1, "Cell @ (2,4) is now alive");
 	equal(_checkStatus(set, 4, 5), 0, "Cell @ (4,5) is still dead");
 });
+
+test("testing step", function(){
+	var board = BoardModel(6); 
+	var set = [[0,1,0,0,1,0],
+			[1,0,0,1,0,1],
+			[0,0,0,0,0,0],
+			[0,1,1,1,0,0],
+			[0,1,0,1,0,0],
+			[0,1,1,1,0,0]];
+	board.setBoard(set);
+	var step = [[0,0,0,0,1,0],
+				[0,0,0,0,1,0],
+				[0,1,0,1,1,0],
+				[0,1,0,1,0,0],
+				[1,0,0,0,1,0],
+				[0,1,0,1,0,0]];
+	var results = board.step();
+	console.log(results);
+	equal(1, 1, "Practice step"); //had to check visually
+});
+
+
+
+
+
+
+
+
+

@@ -27,7 +27,7 @@ var GraphView = function(size){
 		* @param {Array} board Snapshot of the next graph state
 		* @return {} Returns true on success
 		*/
-		render: function(board){
+		render: function(set){
 			console.log("Rendering", board);
 			//remove the previous board
 			pad.clear();
@@ -35,9 +35,9 @@ var GraphView = function(size){
 			//Iterate in nested loop to create the board
 			for (var i = 0; i < size; i += 1) {
 				for (var j = 0; j < size; j += 1) {
-					// select circle or square according some arbitrary criterion
+					var fill = (set[j][i]) ? black : white;
 					pad.draw_rectangle(Coord(i*x_factor, j*y_factor),
-						x_factor, y_factor, LINE_WIDTH, grey);
+						x_factor, y_factor, LINE_WIDTH, grey, fill);
 				}
 			}
 		}

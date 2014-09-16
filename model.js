@@ -19,20 +19,29 @@ var BoardModel = function(size){
 		set.push(arr);
 	}
 
-	return{
+	return {
 
 		step: function(){ 
-			console.log("step!");
-
+			var currentSet = set;
+			//Figure out the next step
+			var nextSet = [];
+			for(var i=0; i<currentSet.length; i+=1){
+				var row = [];
+				for (var j=0; j<currentSet.length; j+=1) {
+					row.push(_checkStatus(currentSet, i, j));
+				}
+				nextSet.push(row);
+			}
+			console.log(nextSet);
+			return nextSet;
 		},
 
 		getSet: function(){
 			return set; //could this have issues?
 		},
 
-		setBoard: function(name){
-			//uses name to set the initial state.
-			return true;
+		setBoard: function(update){
+			set = update;
 		}
 	}
 }
@@ -47,42 +56,30 @@ var BoardModel = function(size){
 * @param {Integer} y Integer that corresponds to the y coordinate of the cell
 	* @return {boolean} Returns boolean when complete
 */
-_checkStatus = function(set, x, y){
-	//if alive
-		//<2 neighbors = dies
-		//2||3 neighbors = lives
-		//>3 neighbors = dies
-	//dead
-		//if 3 neighbors = lives
+function _checkStatus (set, x, y){
 	//First step, determine if alive or dead.
 	var status = set[x][y]; // 1 = alive; 0 = dead
-	var liveNeighbors = _checkNeighbors(set, x, y);
+	var liveNeighbors = _checkNeighbors(set, x, y); //get the count of living neighbors
+	//apply rules of the game
 	if(status){
-		console.log('Cell at ', x, y, ' is currently alive!');
-		if( (liveNeighbors < 2) || (liveNeighbors>3) ){
-			console.log('Died because of ', liveNeighbors, " neighbors.");
-			return 0;
-		}
-		else{
-			console.log('Lives on because of having only ', liveNeighbors, " neighbors.");
-			return 1;
-		}
+		return ( (liveNeighbors < 2) || (liveNeighbors>3) ) ? 0 : 1;
 	}
 	else{
-		console.log('Cell at ', x, y, 'currently, dead!');
-		if(liveNeighbors == 3){
-			console.log('Lives because of exactly ', liveNeighbors, " neighbors.");
-			return 1;
-		}
-		else{
-			console.log('Remains dead because of having only ', liveNeighbors, " neighbors.");
-			return 0;
-		}
+		return (liveNeighbors==3) ? 1 : 0;
 	}
-
 }
 
-_checkNeighbors = function(set, x, y){
+/**
+* Private method _checkNeighbors takes the current board set, and x and y coordinates
+* and calculates the total number of live neighbor cells.
+*
+* @method _checkNeighbors
+* @param {Array} set Array of arrays of the current board
+* @param {Integer} x Integer that corresponds to the x coordinate of the cell
+* @param {Integer} y Integer that corresponds to the y coordinate of the cell
+* @return {Integer} Returns int value that is a count of the live cells around cell (x,y)
+*/
+function _checkNeighbors(set, x, y){
 	//Go though and check the neighbors.
 	//get max length
 	var max = set.length-1;
