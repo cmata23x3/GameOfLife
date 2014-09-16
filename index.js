@@ -1,24 +1,49 @@
 /**
-* Anonymous function that works as the main method controller.
+* Overall Controller class for the entire game of life. This
+* controller initializes and manages the view and model objects.
 *
+* @return {Object} Returns GameController object
 */
-(function () {
-	var BOARD_SIZE = 20;
-	console.log("Running the main method");
-	//Create an instance of the model
-	board = BoardModel(BOARD_SIZE);
-	board.setBoard(board.randomizeBoard());
-
-	//Create a instance of the Graph
+var GameController = function(){
+	var BOARD_SIZE = 30;
+	//Create an instance of the model & of the view
+	var board = BoardModel(BOARD_SIZE);
 	var graph = GraphView(BOARD_SIZE);
 
-	//Set Initial design
-	graph.render(board.getSet());
+	//render the empty board
+	graph.render();
+	return {
+		/**
+		* Method is called once to randomize and render the board. It also
+		* sets the interval so the game will be played.
+		*
+		* @method run
+		*/
+		run: function(){
+			board.setBoard(board.randomizeBoard());
 
-	// set Interval
-	setInterval(function(){
-		board.setBoard(board.step());
-		graph.render(board.getSet());
-	},300);
+			//Render initial random set
+			graph.render(board.getSet());
 
+			// set Interval & render
+			setInterval(function(){
+				board.setBoard(board.step());
+				graph.render(board.getSet());
+			},400);
+		}
+	}
+}
+
+/**
+* jQuery click listener. Calls run() when Start button is clicked.
+*/
+$( "#start" ).click(function() {
+	controller.run();
+});
+
+/**
+* Anonymous function that initializes the controller.
+*/
+(function () {
+	controller = GameController();
 	}) ()

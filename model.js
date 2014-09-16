@@ -38,7 +38,6 @@ var BoardModel = function(size){
 				}
 				nextSet.push(row);
 			}
-			console.log(nextSet);
 			return nextSet;
 		},
 
@@ -63,6 +62,14 @@ var BoardModel = function(size){
 			set = update;
 		},
 
+		/**
+		* This method uses Math.random to randomly populate a set.
+		* Each cell has 25% probability of being alive. Once done, 
+		* an array of arrays is returned. 
+		*
+		* @method randomizeBoard
+		* @return {Array} Returns Array of arrays with random set up.
+		*/
 		randomizeBoard: function(){
 			var length = size;
 			//Figure out the next step
@@ -74,7 +81,6 @@ var BoardModel = function(size){
 				}
 				set.push(row);
 			}
-			console.log("random set: ", set);
 			return set;			 
 		}
 	}

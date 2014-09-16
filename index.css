@@ -1,12 +1,28 @@
 #main_container {
 	position: absolute; 
-	left: 100px; 
+	left: 200px; 
 	top: 100px; 
 	width: 400px; 
 	height: 400px;
-	/*margin: 0 auto;*/
 }
 
 #controls{
-	
+	margin: 10px;
+	padding: 10px;
+	display: inline-block; /* added this */
+    width: 100px;
+    height: auto;
+}
+
+#controls h3{
+	font-style: italic;
+	text-align: center;
+}
+
+#controls button{
+	margin-top: 10px;
+}
+
+#title{
+	margin-left: 10px;
 }

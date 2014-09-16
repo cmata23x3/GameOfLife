@@ -1,4 +1,5 @@
 test("testing Board", function() {
+	expect(2);
 	var board = BoardModel(5);
 	var set = [[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]];
 	equal( board.getSet().length, set.length, 'Same Column Length');
@@ -7,6 +8,7 @@ test("testing Board", function() {
 });
 
 test("testing _checkNeighbors", function() {
+	expect(6);
 	var set = [[0,1,0,0,1,0],
 				[1,0,0,1,0,1],
 				[0,0,0,0,0,0],
@@ -22,6 +24,7 @@ test("testing _checkNeighbors", function() {
 });
 
 test("testing _checkStatus", function(){
+	expect(5);
 	var set = [[0,1,0,0,1,0],
 			[1,0,0,1,0,1],
 			[0,0,0,0,0,0],
@@ -36,6 +39,7 @@ test("testing _checkStatus", function(){
 });
 
 test("testing step", function(){
+	expect(2);
 	var board = BoardModel(6); 
 	var set = [[0,1,0,0,1,0],
 			[1,0,0,1,0,1],
@@ -50,12 +54,24 @@ test("testing step", function(){
 				[0,1,0,1,0,0],
 				[1,0,0,0,1,0],
 				[0,1,0,1,0,0]];
-	var results = board.step();
-	console.log(results);
-	equal(1, 1, "Practice step"); //had to check visually
+	results = board.step();
+	deepEqual(results, step, "Practice step 1");
+
+	//next step 
+	board.setBoard(results);
+	var step2 = [[0,0,0,0,0,0],
+				[0,0,0,0,1,1],
+				[0,0,0,1,1,0],
+				[1,1,0,1,0,0],
+				[1,1,0,1,1,0],
+				[0,0,0,0,0,0]];
+	results2 = board.step();
+	console.log(results2);
+	deepEqual(results2, step2, "Practice step 2");
 });
 
 test("testing randomizeBoard", function(){
+	expect(3);
 	var board = BoardModel(6); 
 	var randomBoard = board.randomizeBoard();
 	equal(randomBoard.length, 6, "Check that board rows is correct");

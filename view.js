@@ -34,7 +34,13 @@ var GraphView = function(size){
 			//Iterate in nested loop to create the board
 			for (var i = 0; i < size; i += 1) {
 				for (var j = 0; j < size; j += 1) {
-					var fill = (set[j][i]) ? black : white;
+					var fill; 
+					if (set == null) {
+						fill = white;
+					}
+					else{
+						fill = (set[j][i]) ? black : white;
+					}
 					pad.draw_rectangle(Coord(i*x_factor, j*y_factor),
 						x_factor, y_factor, LINE_WIDTH, grey, fill);
 				}
