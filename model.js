@@ -32,7 +32,7 @@ var BoardModel = function(size){
 			//Figure out the next step
 			var nextSet = [];
 			for(var i=0; i<currentSet.length; i+=1){
-				var row = [];
+				var row = []; //put here to avoid overwritting var memory
 				for (var j=0; j<currentSet.length; j+=1) {
 					row.push(_checkStatus(currentSet, i, j));
 				}
@@ -48,7 +48,7 @@ var BoardModel = function(size){
 		* @return {Array} Returns Array of arrays 
 		*/
 		getSet: function(){
-			return set; //could this have issues?
+			return set; 
 		},
 
 		/**

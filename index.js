@@ -5,7 +5,7 @@
 * @return {Object} Returns GameController object
 */
 var GameController = function(){
-	var BOARD_SIZE = 30;
+	var BOARD_SIZE = 20;
 	//Create an instance of the model & of the view
 	var board = BoardModel(BOARD_SIZE);
 	var graph = GraphView(BOARD_SIZE);
