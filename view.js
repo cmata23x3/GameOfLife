@@ -5,6 +5,7 @@
 * @return {Object} Returns GraphView Object instance
 */
 var GraphView = function(size){
+	var that = Object.create(GraphView.prototype);
 	//Create colors
 	var black = Color(0,0,0);
 	var white = Color(255,255,255);
@@ -19,32 +20,32 @@ var GraphView = function(size){
 	var x_factor = pad.get_width() / size;
 	var y_factor = pad.get_height() / size;
 
-	return {
-		/**
-		* Function is used to render the Game of Life onto the HTML.
-		*
-		* @method render
-		* @param {Array} board Snapshot of the next graph state
-		* @return {} Returns true on success
-		*/
-		render: function(set){
-			//remove the previous board
-			pad.clear();
+	/**
+	* Function is used to render the Game of Life onto the HTML.
+	*
+	* @method render
+	* @param {Array} board Snapshot of the next graph state
+	* @return {} Returns true on success
+	*/
+	that.render = function(set){
+		//remove the previous board
+		pad.clear();
 
-			//Iterate in nested loop to create the board
-			for (var i = 0; i < size; i += 1) {
-				for (var j = 0; j < size; j += 1) {
-					var fill; 
-					if (set == null) {
-						fill = white;
-					}
-					else{
-						fill = (set[j][i]) ? black : white;
-					}
-					pad.draw_rectangle(Coord(i*x_factor, j*y_factor),
-						x_factor, y_factor, LINE_WIDTH, grey, fill);
+		//Iterate in nested loop to create the board
+		for (var i = 0; i < size; i += 1) {
+			for (var j = 0; j < size; j += 1) {
+				var fill; 
+				if (set == null) {
+					fill = white;
 				}
+				else{
+					fill = (set[j][i]) ? black : white;
+				}
+				pad.draw_rectangle(Coord(i*x_factor, j*y_factor),
+					x_factor, y_factor, LINE_WIDTH, grey, fill);
 			}
 		}
 	}
+
+	return that;
 } 

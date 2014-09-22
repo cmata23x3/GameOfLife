@@ -8,82 +8,69 @@
 * @return {Object} Returns BoardModel Object instance
 */
 var BoardModel = function(size){
-	var set = [];
+	var that = Object.create(BoardModel.prototype);
 
-	//Iterate through and create an array of arrays data structure
-	for(var i=0; i<size; i+=1){
-		var arr = [];
-		for(var j=0; j<size; j+=1){
-			arr.push(0);
+	var set = _runDoubleLoop(size, function(){return 0});
+
+	/**
+	* This method uses the current set data structure and 
+	* returns the data structure that would appear after one time step.
+	*
+	* @method step
+	* @return {Array} Returns Array of arrays 
+	*/
+	that.step = function(){ 
+		var currentSet = set;
+		//Figure out the next step
+		var nextSet = [];
+		for(var i=0; i<size; i+=1){ // can't add _runDoubleMethod because method has inputs
+			var row = []; //put here to avoid overwritting var memory
+			for (var j=0; j<size; j+=1) {
+				row.push(_checkStatus(currentSet, i, j));
+			}
+			nextSet.push(row);
 		}
-		set.push(arr);
+		return nextSet;
+	},
+
+	/**
+	* getSet is a getter that returns the current set data structure.
+	*
+	* @method getSet
+	* @return {Array} Returns Array of arrays 
+	*/
+	that.getSet = function(){
+		return set; 
 	}
 
-	return {
-		/**
-		* This method uses the current set data structure and 
-		* returns the data structure that would appear after one time step.
-		*
-		* @method step
-		* @return {Array} Returns Array of arrays 
-		*/
-		step: function(){ 
-			var currentSet = set;
-			//Figure out the next step
-			var nextSet = [];
-			for(var i=0; i<currentSet.length; i+=1){
-				var row = []; //put here to avoid overwritting var memory
-				for (var j=0; j<currentSet.length; j+=1) {
-					row.push(_checkStatus(currentSet, i, j));
-				}
-				nextSet.push(row);
-			}
-			return nextSet;
-		},
-
-		/**
-		* getSet is a getter that returns the current set data structure.
-		*
-		* @method getSet
-		* @return {Array} Returns Array of arrays 
-		*/
-		getSet: function(){
-			return set; 
-		},
-
-		/**
-		* This method setBoard is a setter for the data structure. 
-		*
-		* @method setBoard
-		* @param {Array} update Array of arrays that the model's set
-		* should be set to. 
-		*/
-		setBoard: function(update){
+	/**
+	* This method setBoard is a setter for the data structure. 
+	*
+	* @method setBoard
+	* @param {Array} update Array of arrays that the model's set
+	* should be set to. 
+	*/
+	that.setBoard = function(update){
+		//Add some type checking
+		if(update instanceof Array){
 			set = update;
-		},
-
-		/**
-		* This method uses Math.random to randomly populate a set.
-		* Each cell has 25% probability of being alive. Once done, 
-		* an array of arrays is returned. 
-		*
-		* @method randomizeBoard
-		* @return {Array} Returns Array of arrays with random set up.
-		*/
-		randomizeBoard: function(){
-			var length = size;
-			//Figure out the next step
-			var set = [];
-			for(var i=0; i<length; i+=1){
-				var row = [];
-				for (var j=0; j<length; j+=1) {
-					row.push( Math.random() <0.25 ? 1 : 0);
-				}
-				set.push(row);
-			}
-			return set;			 
 		}
 	}
+
+	/**
+	* This method uses Math.random to randomly populate a set.
+	* Each cell has 25% probability of being alive. Once done, 
+	* an array of arrays is returned. 
+	*
+	* @method randomizeBoard
+	* @return {Array} Returns Array of arrays with random set up.
+	*/
+	that.randomizeBoard = function(){
+		//Figure out the next step
+		return _runDoubleLoop(size, function(){ return Math.random() <0.25 ? 1 : 0 });			 
+	}
+
+	return that;
 }
 
 /**
@@ -137,4 +124,25 @@ function _checkNeighbors(set, x, y){
 		}
 	}
 	return count;
+}
+
+/**
+* Helper method goes through and runs the double for loop. 
+* Helps reduce redundant code.
+*
+* @method _runDoubleLoop
+* @param {Integer} size Integer 
+* @param {Function} f Function that will be run and result will be put into each array entry.
+* @return {Array} Returns array of array that corresponds to a board.
+*/
+function _runDoubleLoop(size, f){
+	var set = [];
+	for(var i=0; i<size; i+=1){
+		var row = [];
+		for (var j=0; j<size; j+=1) {
+			row.push(f());
+		}
+		set.push(row);
+	}
+	return set;	
 }
