@@ -25,7 +25,6 @@ var GraphView = function(size){
 	*
 	* @method render
 	* @param {Array} board Snapshot of the next graph state
-	* @return {} Returns true on success
 	*/
 	that.render = function(set){
 		//remove the previous board
@@ -48,4 +47,4 @@ var GraphView = function(size){
 	}
 
 	return that;
-} 
+};

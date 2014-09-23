@@ -11,11 +11,67 @@ var GameController = function(){
 	//Create an instance of the model & of the view
 	var board = BoardModel(BOARD_SIZE);
 	var graph = GraphView(BOARD_SIZE);
+	var DOMgraph = DOMView(BOARD_SIZE);
 	//Create an interval variable
 	var interval = {};
+	var state = 0;
+
+	//Create some buttons to add to the html
+	var handleButton = $('<button/>', {
+				        text: 'Pause',
+				        id: 'handle',
+				        class: 'btn btn-default',
+				        click: function () { 
+				        	if(that.getState() === 1){
+				        		that.removeInterval();
+				        		handleButton.html("Resume");
+				        	}
+				        	else if (that.getState() === 0){
+				        		that.addInterval();
+				        		handleButton.html("Pause");
+				        	}
+				        	else{
+				        		//do nothing
+				        	}
+				        }, 
+				        disabled: true
+				    });
+
+	var startButton = $('<button/>', {
+			        text: 'Randomize & Start',
+			        id: 'start',
+			        class: 'btn btn-default',
+			        click: function () { 
+			        	handleButton.prop('disabled', false)
+			        	that.run(); 
+			        }
+			    });
+
+	$('#controls').append([startButton, handleButton]);
 
 	//render the empty board
 	graph.render();
+	DOMgraph.initialize();
+
+	/*
+	* Method is called when to get the state of the game, whether running or paused.
+	*
+	* @method getState
+	* @return {Integer} Returns the integer corresponding to the state of the game.
+	*/
+	that.getState = function(){
+		return state;
+	}
+
+	/* 
+	* Method is called when the state variable would like be reassigned. 
+	* 
+	* @method setState
+	* @param {Integer} newState the new value that the state should be set to
+	*/ 
+	that.setState =function(newState){
+		state = newState;
+	}
 
 	/*
 	* Method is called when the user would like to pause the state of 
@@ -24,6 +80,7 @@ var GameController = function(){
 	* @method pause
 	*/
 	that.removeInterval = function(){
+		that.setState(0);
 		clearInterval(interval);
 	}
 
@@ -34,11 +91,12 @@ var GameController = function(){
 	* @method pause
 	*/
 	that.addInterval = function(){
+		that.setState(1);
 		// set Interval & render
 		interval = setInterval(function(){
 			board.setBoard(board.step());
 			graph.render(board.getSet());
-		}, 400);
+		}, 350);
 	}
 
 	/**
@@ -58,21 +116,14 @@ var GameController = function(){
 
 		//Set interval & render
 		that.addInterval();
+		handleButton.html("Pause");
 	}
-
 	return that;
-}
-
-/**
-* jQuery click listener. Calls run() when Start button is clicked.
-*/
-$( "#start" ).click(function() {
-	controller.run();
-});
+};
 
 /**
 * Anonymous function that initializes the controller.
 */
 (function () {
-	controller = GameController();
+	var controller = GameController();
 	}) ()

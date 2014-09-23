@@ -26,3 +26,15 @@
 #title{
 	margin-left: 10px;
 }
+
+#board{
+	height: 400px;
+	width: 400px;
+}
+.board-row{
+	width: 400px;
+}
+
+.cell{
+	padding:0px;	
+}

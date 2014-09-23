@@ -71,7 +71,7 @@ var BoardModel = function(size){
 	}
 
 	return that;
-}
+};
 
 /**
 * Private method _checkStatus takes the current board set, and x and y coordinates
@@ -94,7 +94,7 @@ function _checkStatus (set, x, y){
 	else{
 		return (liveNeighbors==3) ? 1 : 0;
 	}
-}
+};
 
 /**
 * Private method _checkNeighbors takes the current board set, and x and y coordinates
@@ -124,7 +124,7 @@ function _checkNeighbors(set, x, y){
 		}
 	}
 	return count;
-}
+};
 
 /**
 * Helper method goes through and runs the double for loop. 
@@ -145,4 +145,4 @@ function _runDoubleLoop(size, f){
 		set.push(row);
 	}
 	return set;	
-}
+};
