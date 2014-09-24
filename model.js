@@ -44,6 +44,24 @@ var BoardModel = function(size){
 	}
 
 	/**
+	* Function toggles the cell value in the model.
+	* 
+	* @method toggleCell
+	* @param {Integer} x x coordinate that should be toggled
+	* @param {Integer} y y coordinate that should be toggled
+	* @return value that the model has in the entry.
+	*/
+	that.toggleCell = function(x,y){
+		var newSet = that.getSet();
+		var newStatus = 1 - newSet[x][y];
+		newSet[x][y] = newStatus;
+		that.setBoard(newSet);
+		console.log("new status for ", x, y, "is: ", that.getSet()[x][y]);
+		return newStatus;
+	}
+
+
+	/**
 	* This method setBoard is a setter for the data structure. 
 	*
 	* @method setBoard

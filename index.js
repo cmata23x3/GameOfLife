@@ -10,8 +10,8 @@ var GameController = function(){
 	var that = Object.create(GameController.prototype);
 	//Create an instance of the model & of the view
 	var board = BoardModel(BOARD_SIZE);
-	var graph = GraphView(BOARD_SIZE);
-	var DOMgraph = DOMView(BOARD_SIZE);
+	// var graph = GraphView(BOARD_SIZE);
+	// var DOMgraph = DOMView(that, BOARD_SIZE);
 	//Create an interval variable
 	var interval = {};
 	var state = 0;
@@ -37,21 +37,32 @@ var GameController = function(){
 				        disabled: true
 				    });
 
+	// var startButton = $('<button/>', {
+	// 		        text: 'Randomize & Start',
+	// 		        id: 'random',
+	// 		        class: 'btn btn-default',
+	// 		        disabled: true,
+	// 		        click: function () { 
+	// 		        	handleButton.prop('disabled', false);
+	// 		        	that.runRandom(); 
+	// 		        }
+	// 		    });
+
 	var startButton = $('<button/>', {
-			        text: 'Randomize & Start',
-			        id: 'start',
-			        class: 'btn btn-default',
-			        click: function () { 
-			        	handleButton.prop('disabled', false)
-			        	that.run(); 
-			        }
-			    });
+					text: 'Start',
+					id: 'start',
+					class: 'btn btn-default',
+					click: function(){
+						handleButton.prop('disabled', false);
+						that.run();
+					}
+					});	
 
 	$('#controls').append([startButton, handleButton]);
 
 	//render the empty board
-	graph.render();
-	DOMgraph.initialize();
+	// graph.render();
+	// DOMgraph.initialize();
 
 	/*
 	* Method is called when to get the state of the game, whether running or paused.
@@ -77,39 +88,83 @@ var GameController = function(){
 	* Method is called when the user would like to pause the state of 
 	* the board. Method takes the interval instance and clears it.
 	*
-	* @method pause
+	* @method removeInterval
 	*/
 	that.removeInterval = function(){
 		that.setState(0);
 		clearInterval(interval);
 	}
 
+	// /*
+	// * Method is called when the user click's to start the random interval.
+	// *
+	// * @method addRandomInterval
+	// */
+	// that.addInterval = function(){
+	// 	that.setState(1);
+	// 	// set Interval & render
+	// 	interval = setInterval(function(){
+	// 		board.setBoard(board.step());
+	// 		graph.render(board.getSet());
+	// 	}, 350);
+	// }
+
 	/*
-	* Method is called when the user would like to pause the state of 
-	* the board. Method takes the interval instance and clears it.
-	*
-	* @method pause
+	* Method is called when the user click's to start button. Adds
+	* setInterval and calls refill button.
+	* 
+	* @method addInterval
 	*/
 	that.addInterval = function(){
 		that.setState(1);
 		// set Interval & render
 		interval = setInterval(function(){
 			board.setBoard(board.step());
-			graph.render(board.getSet());
+			DOMgraph.refill(board.getSet());
 		}, 350);
 	}
 
-	/**
-	* Method is called once to randomize and render the board. It also
+	/*
+	* Method is called when a mouse event occurs. The method is called
+	* by the view and passed to the controller. Controller will then forward to the model.
+	*
+	* @method handleEvent
+	* @param {Object} params an object instance that will pass criteria from the event to the controller
+	* @param {Function} callback method that is called once the change to the model
+	*/
+	that.handleEvent = function(params, callback){
+		var status = board.toggleCell(params.x, params.y);
+		callback(status);
+	}
+
+	// /** OLD CODE: 1.1
+	// * Method is called once to randomize and render the board. It also
+	// * sets the interval so the game will be played.
+	// *
+	// * @method runRandom
+	// */
+	// that.run = function(){
+	// 	board.setBoard(board.randomizeBoard());
+
+	// 	//Render initial random set
+	// 	graph.render(board.getSet());
+
+	// 	//Remove the previous Interval (if any)
+	// 	that.removeInterval();
+
+	// 	//Set interval & render
+	// 	that.addInterval();
+	// 	handleButton.html("Pause");
+	// }
+
+	/* Method is called once to start the board. It also
 	* sets the interval so the game will be played.
 	*
-	* @method run
+	* @method runRandom
 	*/
 	that.run = function(){
-		board.setBoard(board.randomizeBoard());
-
-		//Render initial random set
-		graph.render(board.getSet());
+		//fill the board to make sure
+		DOMgraph.refill(board.getSet());
 
 		//Remove the previous Interval (if any)
 		that.removeInterval();
@@ -118,6 +173,10 @@ var GameController = function(){
 		that.addInterval();
 		handleButton.html("Pause");
 	}
+
+	var DOMgraph = DOMView(that, BOARD_SIZE);
+	DOMgraph.initialize();
+
 	return that;
 };
 

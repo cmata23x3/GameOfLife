@@ -27,6 +27,10 @@
 	margin-left: 10px;
 }
 
+table, td, tr{
+	border: 1px solid rgb(150,150,150);
+}
+
 #board{
 	height: 400px;
 	width: 400px;
@@ -37,4 +41,12 @@
 
 .cell{
 	padding:0px;	
+}
+
+.cell-empty{
+	background-color: white;
+}
+
+.cell-alive{
+	background-color: black;
 }

@@ -79,3 +79,23 @@ test("testing randomizeBoard", function(){
 	equal(1, 1, "Practice step"); //check visually.
 });
 
+test("testing toggleCell", function(){
+	expect(2);
+	var board = BoardModel(6);
+	var status = board.toggleCell(0,0);
+	var result = [[1,0,0,0,0,0],
+				  [0,0,0,0,0,0],
+				  [0,0,0,0,0,0],
+				  [0,0,0,0,0,0],
+				  [0,0,0,0,0,0],
+				  [0,0,0,0,0,0]];
+	deepEqual(board.getSet(), result, "Cell @ 0,0 should be alive");
+	var result2 = [[1,0,0,0,0,0],
+			  	   [0,0,1,0,0,0],
+			  	   [0,0,0,0,0,0],
+			  	   [0,0,0,0,0,0],
+			  	   [0,0,0,0,0,0],
+			  	   [0,0,0,0,0,0]];
+	status = board.toggleCell(1,2);
+	deepEqual(board.getSet(), result2, "Cell @ 1,2 should be alive");
+})
