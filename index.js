@@ -11,58 +11,11 @@ var GameController = function(){
 	//Create an instance of the model & of the view
 	var board = BoardModel(BOARD_SIZE);
 	// var graph = GraphView(BOARD_SIZE);
-	// var DOMgraph = DOMView(that, BOARD_SIZE);
 	//Create an interval variable
 	var interval = {};
+	var intervalTime = 350;
 	var state = 0;
 
-	//Create some buttons to add to the html
-	var handleButton = $('<button/>', {
-				        text: 'Pause',
-				        id: 'handle',
-				        class: 'btn btn-default',
-				        click: function () { 
-				        	if(that.getState() === 1){
-				        		that.removeInterval();
-				        		handleButton.html("Resume");
-				        	}
-				        	else if (that.getState() === 0){
-				        		that.addInterval();
-				        		handleButton.html("Pause");
-				        	}
-				        	else{
-				        		//do nothing
-				        	}
-				        }, 
-				        disabled: true
-				    });
-
-	// var startButton = $('<button/>', {
-	// 		        text: 'Randomize & Start',
-	// 		        id: 'random',
-	// 		        class: 'btn btn-default',
-	// 		        disabled: true,
-	// 		        click: function () { 
-	// 		        	handleButton.prop('disabled', false);
-	// 		        	that.runRandom(); 
-	// 		        }
-	// 		    });
-
-	var startButton = $('<button/>', {
-					text: 'Start',
-					id: 'start',
-					class: 'btn btn-default',
-					click: function(){
-						handleButton.prop('disabled', false);
-						that.run();
-					}
-					});	
-
-	$('#controls').append([startButton, handleButton]);
-
-	//render the empty board
-	// graph.render();
-	// DOMgraph.initialize();
 
 	/*
 	* Method is called when to get the state of the game, whether running or paused.
@@ -82,6 +35,26 @@ var GameController = function(){
 	*/ 
 	that.setState =function(newState){
 		state = newState;
+	}
+
+	/*
+	* Method is called when to get the state of the game, whether running or paused.
+	*
+	* @method getIntervalTime
+	* @return {Integer} Returns the integer corresponding to the interval time.
+	*/
+	that.getIntervalTime = function(){
+		return intervalTime;
+	}
+
+	/* 
+	* Method is called when the state variable would like be reassigned. 
+	* 
+	* @method setState
+	* @param {Integer} newState the new value that the state should be set to
+	*/ 
+	that.setIntervalTime =function(time){
+		intervalTime = time;
 	}
 
 	/*
@@ -114,14 +87,16 @@ var GameController = function(){
 	* setInterval and calls refill button.
 	* 
 	* @method addInterval
+	* @param {Integer} value Ranging from 50 to 600 ms interval time.
 	*/
 	that.addInterval = function(){
 		that.setState(1);
 		// set Interval & render
+		console.log(that.getIntervalTime())
 		interval = setInterval(function(){
 			board.setBoard(board.step());
 			DOMgraph.refill(board.getSet());
-		}, 350);
+		}, that.getIntervalTime());
 	}
 
 	/*
@@ -157,10 +132,19 @@ var GameController = function(){
 	// 	handleButton.html("Pause");
 	// }
 
+	/* Method is called to randomize the board before running. 
+	*
+	* @method randomize
+	*/
+	that.randomize = function(){
+		board.setBoard(board.randomizeBoard());
+		DOMgraph.refill(board.getSet());
+	}
+
 	/* Method is called once to start the board. It also
 	* sets the interval so the game will be played.
 	*
-	* @method runRandom
+	* @method run
 	*/
 	that.run = function(){
 		//fill the board to make sure
@@ -171,7 +155,6 @@ var GameController = function(){
 
 		//Set interval & render
 		that.addInterval();
-		handleButton.html("Pause");
 	}
 
 	var DOMgraph = DOMView(that, BOARD_SIZE);

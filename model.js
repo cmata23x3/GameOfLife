@@ -56,7 +56,6 @@ var BoardModel = function(size){
 		var newStatus = 1 - newSet[x][y];
 		newSet[x][y] = newStatus;
 		that.setBoard(newSet);
-		console.log("new status for ", x, y, "is: ", that.getSet()[x][y]);
 		return newStatus;
 	}
 

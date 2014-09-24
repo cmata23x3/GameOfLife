@@ -10,7 +10,7 @@
 	margin: 10px;
 	padding: 10px;
 	display: inline-block; /* added this */
-    width: 100px;
+    width: 150px;
     height: auto;
 }
 
@@ -28,6 +28,7 @@
 }
 
 table, td, tr{
+	/*border: 1px solid hsl(0, 100%, 50%);*/
 	border: 1px solid rgb(150,150,150);
 }
 
@@ -37,6 +38,10 @@ table, td, tr{
 }
 .board-row{
 	width: 400px;
+}
+
+td:hover{
+	border: 2px solid rgb(255, 105, 0);
 }
 
 .cell{
@@ -49,4 +54,10 @@ table, td, tr{
 
 .cell-alive{
 	background-color: black;
+}
+
+#slider-label{
+	margin-top: 10px;
+	font-style: italic;
+	text-align: center;
 }

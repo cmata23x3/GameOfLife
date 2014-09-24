@@ -37,9 +37,3 @@ Array.prototype.reduce = function(f, acc) {
 
     return acc;
 }
-
-String.prototype.parseCoordinates = function(){
-    var arr = this.split(",");
-    var coords = arr.map(parseInt);
-    return {x: coords[0] , y: coords[1]}
-}
