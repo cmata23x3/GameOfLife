@@ -13,9 +13,8 @@ var GameController = function(){
 	// var graph = GraphView(BOARD_SIZE);
 	//Create an interval variable
 	var interval = {};
-	var intervalTime = 350;
+	var intervalTime = 600;
 	var state = 0;
-
 
 	/*
 	* Method is called when to get the state of the game, whether running or paused.

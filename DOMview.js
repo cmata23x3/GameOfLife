@@ -65,18 +65,16 @@ var DOMView = function(controller, size){
 
 	$('#controls').append([startButton, randomButton, handleButton, label, slide]);
 
-	$( "#slide" ).slider({
-		max: 600, 
-		min: 50, 
+	$( "#slide" ).slider({ 
 		slide: function(event, ui){
 			if(controller.getState() === 1){
         		controller.removeInterval();
-        		controller.setIntervalTime(Math.abs(ui.value-550));
+        		controller.setIntervalTime(-5*ui.value+600);
         		controller.addInterval();
         		handleButton.html("Pause");
         	}
         	else if(controller.getState() === 0){
-        		controller.setIntervalTime(Math.abs(ui.value-550));
+        		controller.setIntervalTime(-5*ui.value+600);
         	}
 		}
 	});
