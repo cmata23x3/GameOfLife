@@ -66,7 +66,6 @@ test("testing step", function(){
 				[1,1,0,1,1,0],
 				[0,0,0,0,0,0]];
 	results2 = board.step();
-	console.log(results2);
 	deepEqual(results2, step2, "Practice step 2");
 });
 

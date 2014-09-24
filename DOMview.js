@@ -53,18 +53,20 @@ var DOMView = function(controller, size){
 						controller.run();
 					}
 					});	
-
+	//Add the slide label
 	var label = $('<label/>',{
 		text: "Animation Speed Slider",
 		id: "slider-label"
 	});
-
+	//Add the slider
 	var slide = $('<div/>', {
 		id: "slide"
 	});
-
+	
+	//Add the buttons and slider
 	$('#controls').append([startButton, randomButton, handleButton, label, slide]);
 
+	//intialize the slider
 	$( "#slide" ).slider({ 
 		slide: function(event, ui){
 			if(controller.getState() === 1){

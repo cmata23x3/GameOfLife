@@ -91,7 +91,6 @@ var GameController = function(){
 	that.addInterval = function(){
 		that.setState(1);
 		// set Interval & render
-		console.log(that.getIntervalTime())
 		interval = setInterval(function(){
 			board.setBoard(board.step());
 			DOMgraph.refill(board.getSet());
